@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -61,10 +62,7 @@ class CategoryController extends Controller
             ], 404);
         }
 
-
-        return response()->json([
-            "category" => $category[0]
-        ]);
+        return new CategoryResource($category[0]);
 
     }
 
