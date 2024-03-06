@@ -10,10 +10,22 @@ class Sale extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user_id',
+        'client',
+        'total',
+    ];
+
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'product_sales');
+        return $this->belongsToMany(Product::class, 'product_sales')
+            ->withPivot('quantity');
     }
 
 
