@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
+    Route::get('/auth/checkToken', [ AuthController::class, 'checkToken' ]);
 
     Route::post('/auth/logout', [ AuthController::class, 'logout']);
     

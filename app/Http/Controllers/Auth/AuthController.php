@@ -53,7 +53,13 @@ class AuthController extends Controller
         return response()->json([
             "message" => "La sesion se cerro correctamente",
         ]);
+    }
 
-
+    public function checkToken( Request $request )
+    {
+        $user = $request->user();  
+        return response()->json([
+            "user" => new UserResource($user),
+        ]);
     }
 }
