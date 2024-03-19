@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\Category\FullCategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -19,9 +21,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return response()->json([
-            "categories" => $categories
-        ]);
+        return new CategoryCollection($categories);
     }
 
     /**
@@ -62,7 +62,7 @@ class CategoryController extends Controller
             ], 404);
         }
 
-        return new CategoryResource($category[0]);
+        return new FullCategoryResource($category[0]);
 
     }
 
@@ -89,7 +89,7 @@ class CategoryController extends Controller
 
         return response()->json([
             "message" => "La categoria fue actualizada",
-            "category" => $category
+            "category" => new CategoryResource($category),
         ], 200);
 
     }
