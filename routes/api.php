@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Files\ImageController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Sale\SaleController;
 use Illuminate\Support\Facades\Route;
@@ -36,11 +37,14 @@ Route::middleware('auth:sanctum')->group(function () {
     ->only(['index','store', 'show']);
     // ->except(['update','destroy']);
     
+    
     Route::post('/auth/register', [ AuthController::class, 'register']);
-
-
+    
+    
 });
 
+Route::apiResource('/upload/image', ImageController::class)
+    ->only(['store']);
 
 
 
