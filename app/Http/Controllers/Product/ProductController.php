@@ -104,7 +104,7 @@ class ProductController extends Controller
 
         
         return response()->json([
-            "message" => "La categoria fue eliminada",
+            "message" => "El producto fue eliminado",
             "product" => new ProductResource($product),
         ], 200);
     }
