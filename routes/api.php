@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+// VERTIFACION DE AUTENTICACION
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/auth/checkToken', [ AuthController::class, 'checkToken' ]);
@@ -28,10 +30,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::get('/categories/{term}', [CategoryController::class, 'show']);
     Route::put('/categories/{id}', [CategoryController::class, 'update']);
-    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
     
     
-    Route::apiResource('/products', ProductController::class);
+    Route::apiResource('/products', ProductController::class)
+        ->only(['index', 'show']);
     
     Route::apiResource('/sales', SaleController::class)
     ->only(['index','store', 'show']);
@@ -39,9 +41,18 @@ Route::middleware('auth:sanctum')->group(function () {
     
     
     Route::post('/auth/register', [ AuthController::class, 'register']);
-    
+});
+
+// VERTIFACION DE AUTENTICACION Y ROL DE ADMIN
+Route::middleware(['auth:sanctum', 'role.admin'])->group(function (){
+    Route::apiResource('/products', ProductController::class)
+        ->only(['store', 'destroy', 'update']);
+
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
     
 });
+
+
 
 Route::apiResource('/upload/image', ImageController::class)
     ->only(['store']);
